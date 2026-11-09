@@ -1,0 +1,763 @@
+/* =========================================================
+   DESAFIO PIT WALL · GP DE SÃO PAULO
+   Feito por Nicolas Santos da Silva
+   ========================================================= */
+
+/* ---------- 1. PALETA (:root) ----------
+   As cores ficam guardadas em variáveis e são usadas com var() */
+:root {
+  --black: #0b0b0f;      /* fundo da página */
+  --panel: #16161d;      /* cards, tabela e formulário */
+  --panel-2: #1e1e28;    /* hover das linhas */
+  --field: #0e0e13;      /* fundo dos campos */
+  --line: #2a2a33;       /* bordas discretas */
+  --red: #e10600;        /* vermelho principal */
+  --red-dark: #b80500;   /* vermelho do hover */
+  --white: #f5f5f7;
+  --muted: #9a9aa6;      /* textos cinzas */
+  --yellow: #ffd200;     /* aviso de últimos lugares */
+
+  /* cores das equipes */
+  --ferrari: #e8002d;
+  --mclaren: #ff8000;
+  --mercedes: #27f4d2;
+  --audi: #b9babd;
+
+  --font: 'Titillium Web', 'Segoe UI', Arial, sans-serif;
+  --max: 1036px;         /* largura máxima do conteúdo */
+}
+
+/* ---------- 2. RESET E BASE ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--black);
+  color: var(--white);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- 3. BOTÕES ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 28px;
+  height: 50px;
+  font-family: var(--font);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.btn-primary {
+  background: var(--red);
+  color: var(--white);
+  border-color: var(--red);
+}
+
+.btn-primary:hover {
+  background: var(--red-dark);
+  border-color: var(--red-dark);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  border-color: var(--white);
+}
+
+.btn-outline:hover {
+  background: var(--white);
+  color: var(--black);
+}
+
+.btn-small {
+  height: 50px;
+  padding: 0 28px;
+}
+
+/* =========================================================
+   ÁREA 1 · TOPO — flex em 3 partes
+   ========================================================= */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 48px;
+  border-bottom: 1px solid var(--line);
+}
+
+.logo {
+  font-size: 1.35rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+.logo span {
+  color: var(--red);
+}
+
+.menu {
+  display: flex;
+  gap: 32px;
+}
+
+.menu a {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.menu a:hover {
+  color: var(--white);
+}
+
+/* =========================================================
+   ÁREA 2 · HERO — faixa inclinada + foto (duas camadas)
+   ========================================================= */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  min-height: 510px;
+  padding: 96px 48px 72px;
+  /* camada de cima: degradê com corte seco (preto | faixa vermelha | véu)
+     camada de baixo: a foto do carro */
+  background:
+    linear-gradient(110deg,
+      var(--black) 0%, var(--black) 62%,
+      var(--red) 62%, var(--red) 64.5%,
+      rgba(11, 11, 15, 0.35) 64.5%),
+    url("img/piloto.jpg") right center / max(45%, 680px) auto no-repeat,
+    var(--black);
+}
+
+.hero-content {
+  max-width: 560px;
+}
+
+.hero-tag {
+  color: var(--red);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.hero h1 {
+  font-size: 5.5rem;
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* span em block: SÃO PAULO desce para a linha de baixo */
+.hero h1 span {
+  display: block;
+  color: var(--red);
+}
+
+.hero-text {
+  color: var(--muted);
+  font-size: 1.1rem;
+  max-width: 460px;
+  margin: 18px 0 28px;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* Os 3 números da pista */
+.track-info {
+  display: flex;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 26px;
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.info strong {
+  font-size: 2.4rem;
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1;
+}
+
+.info span {
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Zebra da pista: 40px vermelho, 40px branco, repetindo */
+.kerb {
+  height: 12px;
+  background: repeating-linear-gradient(90deg,
+    var(--red) 0, var(--red) 40px,
+    var(--white) 40px, var(--white) 80px);
+}
+
+/* =========================================================
+   CONTAINER E TÍTULOS DAS SEÇÕES
+   ========================================================= */
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding-top: 64px;
+}
+
+.section-title {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  font-size: 2.1rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin-bottom: 26px;
+}
+
+.section-title span {
+  color: var(--red);
+  font-size: 1rem;
+}
+
+/* =========================================================
+   ÁREA 3 · GRID DE PILOTOS
+   ========================================================= */
+.drivers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+/* cada classe de equipe só troca a variável --team */
+.team-ferrari  { --team: var(--ferrari); }
+.team-mclaren  { --team: var(--mclaren); }
+.team-mercedes { --team: var(--mercedes); }
+.team-audi     { --team: var(--audi); }
+
+.driver-card {
+  background: var(--panel);
+  border-top: 5px solid var(--team);
+  padding: 26px 22px 24px;
+  transition: transform 0.25s, background 0.25s;
+}
+
+.driver-card:hover {
+  transform: translateY(-6px);
+  background: var(--panel-2);
+}
+
+/* número gigante e apagado, como marca d'água */
+.car-number {
+  color: var(--team);
+  font-size: 5rem;
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  opacity: 0.35;
+  padding-left: 12px;
+  margin-bottom: 14px;
+}
+
+.driver-card h3 {
+  font-size: 1.15rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.driver-card h3 strong {
+  font-weight: 900;
+}
+
+.team-name {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+/* =========================================================
+   ÁREA 4 · CLASSIFICAÇÃO — filtros e tabela
+   ========================================================= */
+.filters {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.filter-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* labels pequenos, cinzas e em maiúsculas (filtros e formulário) */
+.filter-field label,
+.form-group label {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* campos (filtros e formulário) */
+input,
+select,
+textarea {
+  width: 100%;
+  font-family: var(--font);
+  font-size: 1rem;
+  color: var(--white);
+  background: var(--field);
+  border: 1px solid var(--line);
+  padding: 12px 16px;
+  min-height: 50px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #6c6c78;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: #45454f;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--red);
+}
+
+select {
+  cursor: pointer;
+}
+
+/* deixa o calendário do campo de data claro no fundo escuro */
+input[type="date"] {
+  color-scheme: dark;
+}
+
+.btn-filter {
+  min-width: 112px;
+}
+
+/* a tabela rola para o lado se não couber */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.standings {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--panel);
+}
+
+.standings th {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.standings td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  font-size: 1rem;
+}
+
+.standings tbody tr {
+  transition: background 0.2s;
+}
+
+.standings tbody tr:hover {
+  background: var(--panel-2);
+}
+
+/* quadrado da posição */
+.pos {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--white);
+  color: var(--black);
+  font-weight: 900;
+}
+
+/* linha do líder em destaque vermelho */
+.standings .leader {
+  background: rgba(225, 6, 0, 0.12);
+}
+
+.standings .leader:hover {
+  background: rgba(225, 6, 0, 0.2);
+}
+
+.leader .pos {
+  background: var(--red);
+  color: var(--white);
+}
+
+/* barrinha com a cor da equipe ao lado do nome */
+.bar {
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  background: var(--team);
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.gap {
+  color: var(--muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+}
+
+.points {
+  font-weight: 900;
+}
+
+/* =========================================================
+   ÁREA 5 · INGRESSOS — duas grades, uma dentro da outra
+   ========================================================= */
+.tickets {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 48px;
+  align-items: start;
+  padding-bottom: 80px;
+}
+
+.tickets-text {
+  color: var(--muted);
+  font-size: 1.05rem;
+  margin-bottom: 18px;
+}
+
+.alert {
+  background: rgba(255, 210, 0, 0.1);
+  border-left: 4px solid var(--yellow);
+  color: var(--yellow);
+  font-weight: 700;
+  padding: 12px 18px;
+  margin-bottom: 6px;
+}
+
+.sectors {
+  list-style: none;
+}
+
+.sectors li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 1rem;
+  transition: padding 0.2s;
+}
+
+.sectors li:hover {
+  padding-left: 6px;
+}
+
+.sectors strong {
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* painel do formulário com borda vermelha em cima */
+.ticket-form {
+  background: var(--panel);
+  border-top: 5px solid var(--red);
+  padding: 34px 32px 32px;
+}
+
+/* form-grid: 2 colunas para os campos */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 22px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group small {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+/* full: ocupa as 2 colunas (foto, recado e botão) */
+.full {
+  grid-column: 1 / -1;
+}
+
+input[type="file"] {
+  border-style: dashed;
+  color: var(--muted);
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+  font-family: var(--font);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--white);
+  background: #55555f;
+  border: none;
+  padding: 4px 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: var(--red);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.ticket-form .btn {
+  width: 100%;
+  margin-top: 6px;
+}
+
+/* =========================================================
+   ÁREA 6 · RODAPÉ
+   ========================================================= */
+.footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding: 32px 24px;
+  border-top: 1px solid var(--line);
+  background: var(--black);
+}
+
+.footer span {
+  color: var(--red);
+}
+
+/* =========================================================
+   RESPONSIVIDADE · TABLET (até 1100px)
+   ========================================================= */
+@media (max-width: 1100px) {
+  /* título um pouco menor e foto cobrindo toda a altura do hero */
+  .hero h1 {
+    font-size: 4.4rem;
+  }
+
+  .hero {
+    background-size: auto, cover;
+  }
+}
+
+/* =========================================================
+   RESPONSIVIDADE · CELULAR (até 768px)
+   ========================================================= */
+@media (max-width: 768px) {
+
+  /* topo: o menu some, ficam logo e botão */
+  .topbar {
+    padding: 16px 20px;
+  }
+
+  .menu {
+    display: none;
+  }
+
+  .btn-small {
+    height: 42px;
+    padding: 0 16px;
+    font-size: 0.8rem;
+  }
+
+  /* hero em coluna, sem a faixa inclinada; foto bem escurecida */
+  .hero {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: auto;
+    padding: 48px 20px 36px;
+    background:
+      linear-gradient(rgba(11, 11, 15, 0.92), rgba(11, 11, 15, 0.82)),
+      url("img/piloto.jpg") center / cover no-repeat;
+  }
+
+  .hero-tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+  }
+
+  .hero h1 {
+    font-size: 3.2rem;
+  }
+
+  .hero-text {
+    font-size: 1rem;
+  }
+
+  .hero-buttons .btn {
+    flex: 1;
+    min-width: 140px;
+    padding: 0 12px;
+    font-size: 0.8rem;
+  }
+
+  /* números da pista ocupam a largura toda */
+  .track-info {
+    justify-content: space-between;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+
+  .info {
+    flex: 1;
+    padding: 0 8px;
+  }
+
+  .info:first-child {
+    border-left: none;
+  }
+
+  .info strong {
+    font-size: 1.9rem;
+  }
+
+  .info span {
+    font-size: 0.7rem;
+    text-align: center;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .section {
+    padding-top: 48px;
+  }
+
+  .section-title {
+    font-size: 1.7rem;
+  }
+
+  /* pilotos: 2 por linha */
+  .drivers {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .driver-card {
+    padding: 18px 14px;
+  }
+
+  .car-number {
+    font-size: 3.6rem;
+    padding-left: 6px;
+  }
+
+  .driver-card h3 {
+    font-size: 1rem;
+  }
+
+  /* filtros empilhados */
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-filter {
+    width: 100%;
+  }
+
+  /* a tabela não cabe: rola para o lado sem quebrar o texto */
+  .standings {
+    min-width: 620px;
+  }
+
+  .standings td,
+  .standings th {
+    white-space: nowrap;
+  }
+
+  /* ingressos e formulário em 1 coluna */
+  .tickets {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .ticket-form {
+    padding: 26px 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
